@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Clip Test</title>
+  </head>
+  <body>
+    <div style="position: absolute; top: 50px; left: 50px;">
+        <canvas id="canvas" width="800" height="600">
+         Your browser does not support the HTML 5 Canvas.
+        </canvas>
+    </div>
+    <script>
+        var cnv = document.getElementById("canvas");
+        var ctx = cnv.getContext("2d");
+        var p2d = new Path2D();
+        setInterval(draw,1000/30);
+        cnv.addEventListener("mousemove", function(event){
+            p2d.arc(event.offsetX, event.offsetY, 30, 0, Math.PI*2);
+        });
+
+        function draw() {
+            ctx.save();
+            ctx.fillStyle = "black";
+            ctx.fillRect(0,0,cnv.width,cnv.height);
+            ctx.clip(p2d);
+            ctx.fillStyle = "white";
+            ctx.fillRect(0,0,cnv.width,cnv.height);
+            ctx.restore();
+        }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Clip Test</title>
+  </head>
+  <body>
+    <div style="position: absolute; top: 50px; left: 50px;">
+        <canvas id="canvas" width="800" height="600">
+         Your browser does not support the HTML 5 Canvas.
+        </canvas>
+    </div>
+    <script>
+        function drawAxes(ctx) {
+            ctx.beginPath();
+            ctx.moveTo(-100,0);
+            ctx.lineTo(100,0);
+            ctx.moveTo(0,-100);
+            ctx.lineTo(0,100);
+            ctx.stroke();
+            ctx.fillText("-X",-120,0);
+            ctx.fillText("+X",100,0);
+            ctx.fillText("-Y",-10,-110);
+            ctx.fillText("+Y",-10,120);
+        }
+        var cnv = document.getElementById("canvas");
+        var ctx = cnv.getContext("2d");
+        var p2d = new Path2D();
+        ctx.lineWidth = 4;
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,cnv.width,cnv.height);
+        ctx.font = "18px sans-serif";
+        for(let x = 0, y=0; x < cnv.width; x += 2, y += 1.5)
+            p2d.arc(x,y,40,0,Math.PI*2);
+        for(let x = cnv.width, y = 0; x > 0; x -= 2, y += 1.5)
+            p2d.arc(x,y,40,0,Math.PI*2);
+        // p2d.arc(cnv.width/4,cnv.height/4,cnv.height/8,0,Math.PI*2);
+        // p2d.arc(cnv.width/4,cnv.height/4 + 20,cnv.height/8,0,Math.PI*2);
+        // p2d.arc(cnv.width/4,cnv.height/4 + 60,cnv.height/8,0,Math.PI*2);
+        ctx.clip(p2d);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0,0,cnv.width,cnv.height);
+        ctx.translate(200,110);
+        ctx.rotate(1);
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        drawAxes(ctx);
+        ctx.translate(100,110);
+        ctx.rotate(1);
+        ctx.strokeStyle = "blue";
+        ctx.fillStyle = "blue";
+        drawAxes(ctx);
+    </script>
+  </body>
+</html>
